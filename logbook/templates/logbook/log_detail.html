@@ -1,0 +1,44 @@
+{% extends 'logbook/base.html' %}
+
+{% block title %}Log — {{ log.engineer_name }}{% endblock %}
+
+{% block content %}
+
+    <h1>Shift Log Detail</h1>
+
+    {% include 'logbook/_status_badge.html' %}
+
+    <table>
+        <tr>
+            <th>Engineer</th>
+            <td>{{ log.engineer_name }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ log.shift_date }}</td>
+        </tr>
+        <tr>
+            <th>Shift</th>
+            <td>{{ log.shift_type }}</td>
+        </tr>
+        <tr>
+            <th>Equipment Status</th>
+            <td>{{ log.equipment_status|default:"Nothing reported" }}</td>
+        </tr>
+        <tr>
+            <th>Incidents</th>
+            <td>{{ log.incidents|default:"None" }}</td>
+        </tr>
+        <tr>
+            <th>Notes</th>
+            <td>{{ log.notes }}</td>
+        </tr>
+        <tr>
+            <th>Logged At</th>
+            <td>{{ log.created_at }}</td>
+        </tr>
+    </table>
+
+    <a href="{% url 'log_list' %}">← Back to All Logs</a>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+{# Reusable badge showing whether a shift was day or night #}
+{% if log.shift_type == 'day' %}
+    <span class="badge badge-day">Day</span>
+{% else %}
+    <span class="badge badge-night">Night</span>
+{% endif %}

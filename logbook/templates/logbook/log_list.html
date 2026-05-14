@@ -1,0 +1,33 @@
+{% extends 'logbook/base.html' %}
+
+{% block title %}
+    {% if filtered %}Incident Logs{% else %}All Shift Logs{% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% if filtered %}
+        <h1>Incident Logs</h1>
+        <p>Showing only shifts where an incident was recorded.</p>
+    {% else %}
+        <h1>All Shift Logs</h1>
+    {% endif %}
+
+    {% for log in logs %}
+        <div class="log-card">
+            {% include 'logbook/_status_badge.html' %}
+            <h2>{{ log.engineer_name }}</h2>
+            <p>{{ log.shift_date }}</p>
+
+            {# Show incident warning only if something was logged #}
+            {% if log.incidents %}
+                <p class="incident-flag">⚠ Incident reported</p>
+            {% endif %}
+
+            <a href="{% url 'log_detail' log.pk %}">View Full Log</a>
+        </div>
+    {% empty %}
+        <p>No logs found.</p>
+    {% endfor %}
+
+{% endblock %}
