@@ -1,0 +1,52 @@
+{% extends 'logbook/base.html' %}
+
+{% block title %}Dashboard — Rig Logbook{% endblock %}
+
+{% block content %}
+
+<h1>Rig Logbook Dashboard</h1>
+<p class="subtitle">Live overview of all shift activity</p>
+
+{# Summary stat cards #}
+<div class="stat-grid">
+    <div class="stat-card">
+        <span class="stat-number">{{ total_logs }}</span>
+        <span class="stat-label">Total Logs</span>
+    </div>
+    <div class="stat-card stat-card--danger">
+        <span class="stat-number">{{ total_incidents }}</span>
+        <span class="stat-label">Incidents Reported</span>
+    </div>
+    <div class="stat-card stat-card--day">
+        <span class="stat-number">{{ day_shifts }}</span>
+        <span class="stat-label">Day Shifts</span>
+    </div>
+    <div class="stat-card stat-card--night">
+        <span class="stat-number">{{ night_shifts }}</span>
+        <span class="stat-label">Night Shifts</span>
+    </div>
+</div>
+
+{# Recent activity section #}
+<div class="section-header">
+    <h2>Recent Activity</h2>
+    <a href="{% url 'log_list' %}">View All Logs →</a>
+</div>
+
+{% for log in recent_logs %}
+    <div class="log-card">
+        {% include 'logbook/_status_badge.html' %}
+        <h2>{{ log.engineer_name }}</h2>
+        <p>{{ log.shift_date }}</p>
+
+        {% if log.incidents %}
+            <p class="incident-flag">⚠ Incident reported</p>
+        {% endif %}
+
+        <a href="{% url 'log_detail' log.pk %}">View Full Log</a>
+    </div>
+{% empty %}
+    <p>No logs yet.</p>
+{% endfor %}
+
+{% endblock %}

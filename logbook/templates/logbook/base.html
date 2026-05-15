@@ -10,10 +10,10 @@
 <body>
 
     <nav>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
         <a href="{% url 'log_list' %}">All Logs</a>
         <a href="{% url 'log_filtered' %}">Incident Logs</a>
     </nav>
-
     <main>
         {% block content %}{% endblock %}
     </main>
